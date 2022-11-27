@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC_Project.Models
 {
@@ -14,6 +15,7 @@ namespace MVC_Project.Models
         public string Surname { get; set; }
 
         [Required]
+        [DisplayName("Date of Birth")]
         public DateTime DoB { get; set; }
 
         [Required]

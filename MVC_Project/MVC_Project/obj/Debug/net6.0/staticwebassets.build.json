@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+vg99oX8lWKeYYctY6ZlenCehAhD6EO5gJyUgRrQ+AU=",
+  "Hash": "c0xXfQgkiMdIhSupC1pBNHjT+lPPx8oYiZfvfeyERns=",
   "Source": "MVC_Project",
   "BasePath": "_content/MVC_Project",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\SherifHoti\\Desktop\\Faculty\\MVC_Project\\MVC_Project\\MVC_Project\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\MVC_Project.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\SherifHoti\\Desktop\\Faculty\\MVC_Project\\MVC_Project\\MVC_Project\\wwwroot\\css\\bootswatchSolar.css",
+      "SourceId": "MVC_Project",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\SherifHoti\\Desktop\\Faculty\\MVC_Project\\MVC_Project\\MVC_Project\\wwwroot\\",
+      "BasePath": "_content/MVC_Project",
+      "RelativePath": "css/bootswatchSolar.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootswatchSolar.css"
     },
     {
       "Identity": "C:\\Users\\SherifHoti\\Desktop\\Faculty\\MVC_Project\\MVC_Project\\MVC_Project\\wwwroot\\css\\site.css",

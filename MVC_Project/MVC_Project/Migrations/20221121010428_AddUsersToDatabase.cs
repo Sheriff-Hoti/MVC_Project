@@ -18,11 +18,11 @@ namespace MVCProject.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
-                    DoB = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DoB = table.Column<DateTime>(type: "timestamp", nullable: false),
                     Gender = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     createdAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    updatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    updatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

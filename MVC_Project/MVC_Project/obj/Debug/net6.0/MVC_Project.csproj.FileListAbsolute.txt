@@ -260,3 +260,8 @@ C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\bin\Debu
 C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\obj\Debug\net6.0\staticwebassets\msbuild.MVC_Project.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\obj\Debug\net6.0\staticwebassets\msbuild.build.MVC_Project.props
+C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.MVC_Project.props
+C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.MVC_Project.props
+C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project\obj\Debug\net6.0\staticwebassets.pack.json

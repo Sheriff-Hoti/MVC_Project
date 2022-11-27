@@ -10,8 +10,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
     builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-
+builder.Services.AddRazorPages();
 var app = builder.Build();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

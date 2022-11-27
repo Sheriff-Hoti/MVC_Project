@@ -2,6 +2,96 @@
 @{
     ViewData["Title"] = "Index";
 }
+@model IEnumerable<User>
 
-<h1>Index User</h1>
-
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Users List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="User" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-person-add"></i> &nbsp; Create New User
+                </a>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Surname
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Birthdate
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Created Date
+                </th>
+                <th>
+                    Updated date
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                   Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text">
+            @foreach(var User in Model)
+            {
+                <tr>
+                    <td>
+                        @User.Name
+                    </td>
+                    <td>
+                        @User.Surname
+                    </td>
+                    <td>
+                        @User.Email
+                    </td>
+                    <td>
+                        @User.DoB
+                    </td>
+                    <td>
+                        @User.Gender
+                    </td>
+                    <td>
+                        @User.createdAt
+                    </td>
+                    <td>
+                        @User.updatedAt
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="User" asp-action="Edit" asp-route-id="@User.Id"
+                            class="btn btn-primary mx-2"> 
+                                <i class="bi bi-pencil-square" ></i> Edit
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="User" asp-action="Delete" asp-route-id="@User.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
