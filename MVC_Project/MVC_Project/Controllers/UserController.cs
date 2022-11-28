@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Project.Data;
 using MVC_Project.Models;
+using MVC_Project.Utility;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace MVC_Project.Controllers
 {
@@ -13,10 +19,28 @@ namespace MVC_Project.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(
+            [FromQuery]
+            string sortKey,
+            [FromQuery]
+            string sortDirection,
+            [FromQuery]
+            int page,
+            [FromQuery]
+            int size
+            )
         {
-            IEnumerable<User> objCategoryList = _db.Users;
-            return View(objCategoryList);
+            if (sortKey == null)
+            {
+                sortKey = "Id";
+            }
+            if (typeof(User).GetProperty(sortKey) == null)
+            {
+                sortKey= "Id";
+            }
+            Console.Write( sortKey );
+            IEnumerable<User> objUserList = _db.Users.OrderByDescending(new UserUtility().userUtils[sortKey]);
+            return View(objUserList);
         }
 
         //GET

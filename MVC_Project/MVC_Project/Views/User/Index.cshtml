@@ -20,26 +20,40 @@
     <table class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
-                <th>
-                    Name
+                <th > 
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="Name" style="text-decoration:none">
+                        <i class="bi bi-caret-down-square-fill">Name</i>
+                    </a> </div>
                 </th>
                 <th>
-                    Surname
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="Surname" style="text-decoration:none">
+                        <i class="bi bi-pencil-square"> Surname</i>
+                    </a>
                 </th>
                 <th>
-                    Email
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="Email" style="text-decoration:none">
+                        <i class="bi bi-pencil-square"> Email</i>
+                    </a>
                 </th>
                 <th>
-                    Birthdate
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="DoB" style="text-decoration:none">
+                        <i class="bi bi-pencil-square">  Birthdate</i>
+                    </a>
                 </th>
                 <th>
-                    Gender
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="Gender" style="text-decoration:none">
+                        <i class="bi bi-pencil-square"> Gender</i>
+                    </a>
                 </th>
                 <th>
-                    Created Date
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="createdAt" style="text-decoration:none">
+                        <i class="bi bi-pencil-square"> Created Date</i>
+                    </a>
                 </th>
                 <th>
-                    Updated date
+                    <a asp-controller="User" asp-action="Index" asp-route-sortKey="updatedAt" style="text-decoration:none">
+                        <i class="bi bi-pencil-square"> Updated Date</i>
+                    </a>
                 </th>
                 <th>
                     Edit
