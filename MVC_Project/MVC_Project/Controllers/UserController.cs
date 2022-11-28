@@ -38,9 +38,16 @@ namespace MVC_Project.Controllers
             {
                 sortKey= "Id";
             }
-            Console.Write( sortKey );
-            IEnumerable<User> objUserList = _db.Users.OrderByDescending(new UserUtility().userUtils[sortKey]);
-            return View(objUserList);
+            if (sortDirection == "DESC")
+            {
+                IEnumerable<User> objUserList = _db.Users.OrderByDescending(new UserUtility().userUtils[sortKey]);
+                return View(objUserList);
+            }
+            else
+            {
+                IEnumerable<User> objUserList = _db.Users.OrderBy(new UserUtility().userUtils[sortKey]);
+                return View(objUserList);
+            }
         }
 
         //GET
