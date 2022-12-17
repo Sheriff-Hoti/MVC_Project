@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
-namespace MVC_Project.Models
+namespace MVC_Project.Models.User
 {
     public class User
     {

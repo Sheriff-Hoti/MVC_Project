@@ -1,55 +1,52 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVC_Project.Data;
-using MVC_Project.Models;
-using MVC_Project.Utility;
+using MVC_Project.Models.User;
+using MVC_Project.Wrappers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using X.PagedList;
 
 namespace MVC_Project.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly UserServices userServices;
 
-        public UserController(ApplicationDbContext db)
+        public UserController(UserServices _us)
         {
-            _db = db;
+            userServices = _us;
         }
 
-        public IActionResult Index(
+        public async Task<IActionResult> Index(
             [FromQuery]
-            string sortKey,
-            [FromQuery]
-            string sortDirection,
-            [FromQuery]
-            int page,
-            [FromQuery]
-            int size
+            PageRequest<User> request
             )
         {
-            if (sortKey == null)
-            {
-                sortKey = "Id";
-            }
-            if (typeof(User).GetProperty(sortKey) == null)
-            {
-                sortKey= "Id";
-            }
-            if (sortDirection == "DESC")
-            {
-                IEnumerable<User> objUserList = _db.Users.OrderByDescending(new UserUtility().userUtils[sortKey]);
-                return View(objUserList);
-            }
-            else
-            {
-                IEnumerable<User> objUserList = _db.Users.OrderBy(new UserUtility().userUtils[sortKey]);
-                return View(objUserList);
-            }
+            PageResponse<User> response =await userServices.List(request);
+            ViewBag.response = response;
+            ViewBag.request = request;
+            return View(response);
         }
 
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await userServices.Details(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
         //GET
         public IActionResult Create()
         {
@@ -59,29 +56,34 @@ namespace MVC_Project.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(User user)
+        public async Task<IActionResult> Create(User user)
         {
-            if (_db.Users.FirstOrDefault(usr => usr.Email == user.Email) != null)
+            if (userServices.GetByEmail(user.Email) != null)
             {
                 ModelState.AddModelError("Email", "Email taken");
+            }
+            if (!userServices.isAgeValid(user))
+            {
+                ModelState.AddModelError("DoB", "Must be beetween 18 and 120 years old");
             }
             if (!ModelState.IsValid)
             {
                 return View(user);
             }
-            user.createdAt = DateTime.Now.ToUniversalTime();
-            user.Id= Guid.NewGuid();
-            user.updatedAt = DateTime.Now.ToUniversalTime(); 
-            _db.Users.Add(user);
-            _db.SaveChanges();
+            
+            await userServices.AddUser(user);
             TempData["success"] = "User created successfully";
             return RedirectToAction("Index");
         }
 
         //GET
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var user = _db.Users.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = await userServices.GetById(id);
             if(user == null)
             {
                 return NotFound();
@@ -92,26 +94,31 @@ namespace MVC_Project.Controllers
         //PUT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(User user)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("Id,Name,Email,Surname,DoB,Gender")]
+            User user)
         {
-
-            //if(_db.Users.Find(user.Id) == null) {
-            //    return NotFound();
-            //}
+            var us = userServices.GetByEmail(user.Email);
+            if (us != null && us.Id != user.Id)
+            {
+                ModelState.AddModelError("Email", "Email taken");
+            }
+            if (!userServices.isAgeValid(user))
+            {
+                ModelState.AddModelError("DoB", "Must be beetween 18 and 120 years old");
+            }
             if (!ModelState.IsValid)
             {
                 return View(user);
             }
-            user.updatedAt = DateTime.Now.ToUniversalTime(); 
-            _db.Users.Update(user);
-            _db.SaveChanges();
+            await userServices.UpdateUser(user);
             TempData["success"] = "User updated successfully";
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var user = _db.Users.Find(id);
+            var user =await userServices.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -122,14 +129,13 @@ namespace MVC_Project.Controllers
         //PUT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(User user)
+        public async Task<IActionResult> Delete(User user)
         {
             if(user == null)
             {
                 return NotFound();
             }
-            _db.Users.Remove(user);
-            _db.SaveChanges();
+            await userServices.RemoveUser(user);
             TempData["success"] = "User deleted successfully";
             return RedirectToAction("Index");
         }

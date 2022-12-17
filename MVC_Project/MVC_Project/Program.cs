@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MVC_Project.Data;
+using MVC_Project.Models.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql
     )
 );
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<UserServices>();
+builder.Services.AddTransient<UserUtility>();
+
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 

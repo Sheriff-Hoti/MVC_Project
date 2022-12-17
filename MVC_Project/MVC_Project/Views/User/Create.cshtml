@@ -2,10 +2,10 @@
 @{
     ViewData["Title"] = "Create";
 }
-@model User
+@model MVC_Project.Models.User.User
 
 <h1>Create</h1>
-<form method="post">
+<form method="post" asp-controller="User" asp-action="Create">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Create User</h2>
