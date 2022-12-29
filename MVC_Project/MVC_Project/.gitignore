@@ -2,6 +2,7 @@
 bin/
 obj/
 ../.vs
+.vs
 # Visual Studio temporary files
 *.user
 *.suo
