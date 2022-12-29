@@ -11,32 +11,32 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
+            Address
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
+            @Model.Address
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
+            Location
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location)
+            @Model.Location
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Model.Name
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OpeningDate)
+            Opening Date
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OpeningDate)
+            @Model.OpeningDate
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary" style="width:150px">Edit</a> 
+    <a asp-action="Index" class="btn btn-primary" style="width:150px">Back to List</a>
 </div>

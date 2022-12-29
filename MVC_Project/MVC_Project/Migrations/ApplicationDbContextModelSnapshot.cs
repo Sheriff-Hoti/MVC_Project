@@ -22,6 +22,51 @@ namespace MVCProject.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("MVC_Project.Models.Employee.Employee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DoB")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("WorkingLocationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("updatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkingLocationId");
+
+                    b.ToTable("Employee");
+                });
+
             modelBuilder.Entity("MVC_Project.Models.Shop.Shop", b =>
                 {
                     b.Property<Guid>("Id")
@@ -40,8 +85,8 @@ namespace MVCProject.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("OpeningDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("OpeningDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -82,6 +127,20 @@ namespace MVCProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MVC_Project.Models.Employee.Employee", b =>
+                {
+                    b.HasOne("MVC_Project.Models.Shop.Shop", "WorkingLocation")
+                        .WithMany("Employees")
+                        .HasForeignKey("WorkingLocationId");
+
+                    b.Navigation("WorkingLocation");
+                });
+
+            modelBuilder.Entity("MVC_Project.Models.Shop.Shop", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

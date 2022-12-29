@@ -1,53 +1,189 @@
-﻿@model IEnumerable<MVC_Project.Models.Shop.Shop>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
+    int currPage = ViewBag.response.Page;
+    int next = currPage + 1;
+    int previous = currPage - 1;
+    int totalPages = ViewBag.response.TotalPages;
+    Dictionary<string, string> renderHeader = new Dictionary<string, string>()
+    {
+        {"Name","Name"},
+        {"Address","Address"},
+        {"Location","Location"},
+        {"OpeningDate","Opening Date"},
+    };
 }
+@model MVC_Project.Wrappers.PageResponse<MVC_Project.Models.Shop.Shop>
 
-<h1>Index</h1>
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Shops List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Shop" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-person-add"></i> &nbsp; Create New Shop
+            </a>
+        </div>
+    </div>
+    <br />
+    <div style="display:flex">
+        <div style="width:50%">
+            <form asp-action="Index" asp-route-sortColumn=@ViewBag.response.SortColumn method="get" class="input-group mb-3">
+                <input name="filterString" type="text" class="form-control" placeholder="Search Name,Address,Location" value=@ViewBag.response.FilterString>
+                <input type="submit" class="btn btn-primary" value="Search" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OpeningDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpeningDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div>
+        <form asp-action="Index" method="get" class="input-group mb-3">
+
+            @*<input name="Surname" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="Email" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="DoB" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="Gender" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="createdAt" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="updatedAt" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@ViewBag.response.FilterString style="width:14%">*@
+            <input type="submit" class="btn btn-primary" value="Search" />
+
+        </form>
+    </div>
+    <br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                @foreach (string key in renderHeader.Keys)
+                {
+                    <th>
+                        @if (ViewBag.response.SortColumn == key && ViewBag.response.SortDirection == "ASC")
+                        {
+
+                            <a asp-controller="Shop" asp-action="Index"
+                       asp-route-sortColumn=@key
+                       asp-route-sortDirection="DESC"
+                       asp-route-FilterString=@ViewBag.response.FilterString
+                       asp-route-page=@currPage
+                       style="text-decoration:none">
+                                <i class="bi bi-caret-up-square-fill">@renderHeader[key]</i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Shop" asp-action="Index"
+                       asp-route-sortColumn=@key
+                       asp-route-sortDirection="ASC"
+                       asp-route-FilterString=@ViewBag.response.FilterString
+                       asp-route-page=@currPage
+                       style="text-decoration:none">
+                                <i class="bi bi-caret-down-square-fill">@renderHeader[key]</i>
+                            </a>
+                        }
+                    </th>
+                }
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Details
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text">
+            @foreach (var Shop in await Model.data)
+            {
+                <tr>
+                    <td>
+                        @Shop.Name
+                    </td>
+                    <td>
+                        @Shop.Address
+                    </td>
+                    <td>
+                        @Shop.Location
+                    </td>
+                    <td>
+                        @Shop.OpeningDate.ToShortDateString()
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Shop" asp-action="Edit" asp-route-id="@Shop.Id"
+                           class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Shop" asp-action="Details" asp-route-id="@Shop.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Details
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Shop" asp-action="Delete" asp-route-id="@Shop.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (ViewBag.response.Page == 1)
+    {
+        <a asp-controller="Shop" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@previous
+       class="btn btn-danger mx-2 disabled">
+            <i class="bi bi-arrow-left-square-fill"></i> Prev
+        </a>
+    }
+    else
+    {
+        <a asp-controller="Shop" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@previous
+       class="btn btn-danger mx-2">
+            <i class="bi bi-arrow-left-square-fill"></i> Prev
+        </a>
+    }
+    <a class="btn btn-danger mx-2">@ViewBag.response.Page</a>
+    @if (totalPages <= currPage)
+    {
+
+        <a asp-controller="Shop" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@next
+       class="btn btn-danger mx-2 disabled">
+            <i class="bi bi-arrow-right-square-fill"></i> Next
+        </a>
+    }
+    else
+    {
+
+        <a asp-controller="Shop" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@next
+       class="btn btn-danger mx-2">
+            <i class="bi bi-arrow-right-square-fill"></i> Next
+        </a>
+    }
+
+</div>
+

@@ -1,14 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MVC_Project.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using MVC_Project.Models.User;
 using MVC_Project.Wrappers;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq.Expressions;
-using System.Reflection;
-using X.PagedList;
 
 namespace MVC_Project.Controllers
 {
@@ -27,9 +19,7 @@ namespace MVC_Project.Controllers
             )
         {
             PageResponse<User> response =await userServices.List(request);
-            ViewBag.response = response;
-            ViewBag.request = request;
-            return View(response);
+            return PartialView("_Table",response);
         }
 
         public async Task<IActionResult> Details(Guid? id)
@@ -125,6 +115,7 @@ namespace MVC_Project.Controllers
             }
             return View(user);
         }
+
 
         //PUT
         [HttpPost]

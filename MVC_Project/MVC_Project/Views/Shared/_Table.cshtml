@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"] = "Table";
+    int currPage = Model.Page;
+    int next = currPage + 1;
+    int previous = currPage - 1;
+    int totalPages = Model.TotalPages;
+    
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/bootswatchSolar.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MVC_Project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-person-add"></i> &nbsp; Create New User
+            </a>
+        </div>
+    </div>
+    <br />
+    <div style="display:flex">
+        <div style="width:50%">
+            <form asp-action="Table" asp-route-sortColumn=@Model.SortColumn method="get" class="input-group mb-3">
+                <input name="filterString" type="text" class="form-control" placeholder="Search Name,Surname,Email" value=@Model.FilterString>
+                <input type="submit" class="btn btn-primary" value="Search" />
+
+            </form>
+        </div>
+    </div>
+    <br />
+    <div>
+        <form asp-action="Table" method="get" class="input-group mb-3">
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </form>
+    </div>
+    <br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                @foreach (string key in Model.header.Keys)
+                {
+                    <th>
+                        @if (Model.SortColumn == key && Model.SortDirection == "ASC")
+                        {
+
+                            <a asp-action="Table"
+                       asp-route-sortColumn=@key
+                       asp-route-sortDirection="DESC"
+                       asp-route-FilterString=@Model.FilterString
+                       asp-route-page=@currPage
+                       style="text-decoration:none">
+                                <i class="bi bi-caret-up-square-fill">@Model.header[key]</i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Table"
+                       asp-route-sortColumn=@key
+                       asp-route-sortDirection="ASC"
+                       asp-route-FilterString=@Model.FilterString
+                       asp-route-page=@currPage
+                       style="text-decoration:none">
+                                <i class="bi bi-caret-down-square-fill">@Model.header[key]</i>
+                            </a>
+                        }
+                    </th>
+                }
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Details
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text">
+            @foreach (var entity in await Model.data)
+            {
+                var dictEntity = Model.utilities.Attrs(entity);
+                <tr>
+                    @foreach(var key in dictEntity.Keys)
+                    {
+                        <td>
+                            @dictEntity[key]
+                        </td>
+                    }
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@entity.Id"
+                           class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-action="Details" asp-route-id="@entity.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Details
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-action="Delete" asp-route-id="@entity.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.Page == 1)
+    {
+        <a asp-action="Table"
+       asp-route-sortColumn=@Model.SortColumn
+       asp-route-sortDirection=@Model.SortDirection
+       asp-route-FilterString=@Model.FilterString
+       asp-route-page=@previous
+       class="btn btn-danger mx-2 disabled">
+            <i class="bi bi-arrow-left-square-fill"></i> Prev
+        </a>
+    }
+    else
+    {
+        <a asp-action="Table"
+       asp-route-sortColumn=@Model.SortColumn
+       asp-route-sortDirection=@Model.SortDirection
+       asp-route-FilterString=@Model.FilterString
+       asp-route-page=@previous
+       class="btn btn-danger mx-2">
+            <i class="bi bi-arrow-left-square-fill"></i> Prev
+        </a>
+    }
+    <a class="btn btn-danger mx-2">@Model.Page</a>
+    @if (totalPages <= currPage)
+    {
+
+        <a asp-action="Table"
+       asp-route-sortColumn=@Model.SortColumn
+       asp-route-sortDirection=@Model.SortDirection
+       asp-route-FilterString=@Model.FilterString
+       asp-route-page=@next
+       class="btn btn-danger mx-2 disabled">
+            <i class="bi bi-arrow-right-square-fill"></i> Next
+        </a>
+    }
+    else
+    {
+
+        <a asp-action="Table"
+       asp-route-sortColumn=@Model.SortColumn
+       asp-route-sortDirection=@Model.SortDirection
+       asp-route-FilterString=@Model.FilterString
+       asp-route-page=@next
+       class="btn btn-danger mx-2">
+            <i class="bi bi-arrow-right-square-fill"></i> Next
+        </a>
+    }
+    
+</div>

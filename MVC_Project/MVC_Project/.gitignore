@@ -1,0 +1,12 @@
+# Compiled assemblies
+bin/
+obj/
+../.vs
+# Visual Studio temporary files
+*.user
+*.suo
+*.sln.docstates
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper

@@ -1,15 +1,13 @@
-﻿using System.ComponentModel;
+﻿using MVC_Project.Wrappers;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 
 namespace MVC_Project.Models.User
 {
-    public class User
+    public class User:BaseEntity
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         [Required]
         public string Name { get; set; }
 

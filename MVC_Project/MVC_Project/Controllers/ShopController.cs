@@ -7,34 +7,38 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_Project.Data;
 using MVC_Project.Models.Shop;
+using MVC_Project.Wrappers;
 
 namespace MVC_Project.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ShopServices shopServices;
 
-        public ShopController(ApplicationDbContext context)
+        public ShopController(ShopServices _shs)
         {
-            _context = context;
+            shopServices = _shs;
         }
 
-        // GET: Shop
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            [FromQuery]
+            PageRequest<Shop> request
+            )
         {
-              return View(await _context.Shop.ToListAsync());
+            PageResponse<Shop> response = await shopServices.List(request);
+            ViewBag.response = response;
+            ViewBag.request = request;
+            return View(response);
         }
 
-        // GET: Shop/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Shop == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var shop = await _context.Shop
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var shop = await shopServices.Details(id);
             if (shop == null)
             {
                 return NotFound();
@@ -42,39 +46,35 @@ namespace MVC_Project.Controllers
 
             return View(shop);
         }
-
-        // GET: Shop/Create
+        //GET
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Shop/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Address,Location,Name,OpeningDate")] Shop shop)
+        public async Task<IActionResult> Create(Shop shop)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                shop.Id = Guid.NewGuid();
-                _context.Add(shop);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(shop);
             }
-            return View(shop);
+
+            await shopServices.Add(shop);
+            TempData["success"] = "User created successfully";
+            return RedirectToAction("Index");
         }
 
-        // GET: Shop/Edit/5
+        //GET
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Shop == null)
+            if (id == null)
             {
                 return NotFound();
             }
-
-            var shop = await _context.Shop.FindAsync(id);
+            var shop = await shopServices.GetById(id);
             if (shop == null)
             {
                 return NotFound();
@@ -82,81 +82,45 @@ namespace MVC_Project.Controllers
             return View(shop);
         }
 
-        // POST: Shop/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //PUT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Address,Location,Name,OpeningDate")] Shop shop)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("Id,Name,Address,Location,Name")]
+            Shop shop)
         {
-            if (id != shop.Id)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(shop);
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(shop);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ShopExists(shop.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(shop);
+            await shopServices.Update(shop);
+            TempData["success"] = "User updated successfully";
+            return RedirectToAction("Index");
         }
 
-        // GET: Shop/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null || _context.Shop == null)
+            var user = await shopServices.GetById(id);
+            if (user == null)
             {
                 return NotFound();
             }
+            return View(user);
+        }
 
-            var shop = await _context.Shop
-                .FirstOrDefaultAsync(m => m.Id == id);
+
+        //PUT
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Shop shop)
+        {
             if (shop == null)
             {
                 return NotFound();
             }
-
-            return View(shop);
-        }
-
-        // POST: Shop/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            if (_context.Shop == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Shop'  is null.");
-            }
-            var shop = await _context.Shop.FindAsync(id);
-            if (shop != null)
-            {
-                _context.Shop.Remove(shop);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ShopExists(Guid id)
-        {
-          return _context.Shop.Any(e => e.Id == id);
+            await shopServices.Remove(shop);
+            TempData["success"] = "User deleted successfully";
+            return RedirectToAction("Index");
         }
     }
 }

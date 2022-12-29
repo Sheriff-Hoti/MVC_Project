@@ -1,13 +1,12 @@
-﻿using System.ComponentModel;
+﻿using MVC_Project.Wrappers;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVC_Project.Models.Shop
 {
-    public class Shop
+    public class Shop : BaseEntity
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-
+        
         [Required]
         public string Address { get; set; }
 
@@ -19,6 +18,8 @@ namespace MVC_Project.Models.Shop
 
         [Required]
         [DisplayName("Opening Date")]
-        public DateOnly OpeningDate { get; set; }
+        public DateTime OpeningDate { get; set; }
+
+        public IEnumerable<Employee.Employee>? Employees { get; set; }
     }
 }

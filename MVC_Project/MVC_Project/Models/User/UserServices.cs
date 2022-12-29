@@ -80,6 +80,8 @@ namespace MVC_Project.Models.User
             return new PageResponse<User>
             {
                 data = objUserList.ToPagedListAsync(request.Page, request.Size),
+                utilities = _userUtility,
+                header = _userUtility.header,
                 SortDirection = request.SortDirection,
                 SortColumn = request.SortColumn,
                 TotalCount = totalCount,

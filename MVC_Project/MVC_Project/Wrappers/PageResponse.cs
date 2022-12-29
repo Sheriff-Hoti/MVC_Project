@@ -1,4 +1,5 @@
-﻿using MVC_Project.Models.User;
+﻿using Microsoft.IdentityModel.Tokens;
+using MVC_Project.Models.User;
 using System.ComponentModel.DataAnnotations;
 using X.PagedList;
 
@@ -8,6 +9,8 @@ namespace MVC_Project.Wrappers
     {
         [Required]
         public Task<IPagedList<T>> data { get; set; }
+
+        public Utility<T> utilities { get; set; }
 
         public string SortDirection { get; set; }
 
@@ -22,6 +25,10 @@ namespace MVC_Project.Wrappers
         public int TotalPages { get; set; }
 
         public string FilterString { get; set; }
+
+        public Dictionary<string, string> header { get; set; }
+
+        public Dictionary<string, string> entityValues { get; set; }
 
     }
 }

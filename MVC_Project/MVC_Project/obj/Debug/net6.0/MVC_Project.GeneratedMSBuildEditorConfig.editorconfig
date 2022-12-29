@@ -16,6 +16,26 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\SherifHoti\Desktop\Faculty\MVC_Project\MVC_Project\MVC_Project
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Employees/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Employees/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Employees/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Employees/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Employees/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -30,6 +50,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Shared/_Notification.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ob3RpZmljYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Shared/_Table.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/Shared/_ValidationScriptsPartial.cshtml]
@@ -62,6 +86,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/User/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/User/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/SherifHoti/Desktop/Faculty/MVC_Project/MVC_Project/MVC_Project/Views/User/Edit.cshtml]

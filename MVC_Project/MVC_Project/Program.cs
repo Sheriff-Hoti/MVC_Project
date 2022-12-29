@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MVC_Project.Data;
+using MVC_Project.Models.Employee;
+using MVC_Project.Models.Shop;
 using MVC_Project.Models.User;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,11 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<UserUtility>();
+builder.Services.AddTransient<EmployeeServices>();
+builder.Services.AddTransient<EmployeeUtility>();
+builder.Services.AddTransient<ShopServices>();
+builder.Services.AddTransient<ShopUtility>();
+
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
