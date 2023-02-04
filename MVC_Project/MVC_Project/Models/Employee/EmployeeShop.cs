@@ -5,5 +5,6 @@
         public Employee employee { get; set; }
 
         public IEnumerable<Shop.Shop> shops { get; set; }
+
     }
 }

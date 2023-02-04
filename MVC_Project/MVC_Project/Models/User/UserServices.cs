@@ -92,13 +92,13 @@ namespace MVC_Project.Models.User
             };
 
         }
-
+        //return type object tipit user ose null
         public async Task<User?> Details(Guid? Id)
         {
             return await _db.Users
                 .FirstOrDefaultAsync(u => u.Id == Id);
         }
-
+        // opsionale ?
         public  User? GetByEmail(string email)
         {
             var user = _db.Users.AsNoTracking().FirstOrDefault(x => x.Email == email);

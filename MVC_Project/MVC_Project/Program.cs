@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MVC_Project.Data;
+using MVC_Project.Models.Book;
+using MVC_Project.Models.Category;
 using MVC_Project.Models.Employee;
 using MVC_Project.Models.Shop;
 using MVC_Project.Models.User;
@@ -21,6 +23,10 @@ builder.Services.AddTransient<EmployeeServices>();
 builder.Services.AddTransient<EmployeeUtility>();
 builder.Services.AddTransient<ShopServices>();
 builder.Services.AddTransient<ShopUtility>();
+builder.Services.AddTransient<CategoryServices>();
+builder.Services.AddTransient<CategoryUtility>();
+builder.Services.AddTransient<BookServices>();
+builder.Services.AddTransient<BookUtility>();
 
 
 var app = builder.Build();

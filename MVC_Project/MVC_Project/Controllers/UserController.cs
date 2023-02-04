@@ -19,7 +19,8 @@ namespace MVC_Project.Controllers
             )
         {
             PageResponse<User> response =await userServices.List(request);
-            return PartialView("_Table",response);
+           return View("_Table",response);
+           
         }
 
         public async Task<IActionResult> Details(Guid? id)

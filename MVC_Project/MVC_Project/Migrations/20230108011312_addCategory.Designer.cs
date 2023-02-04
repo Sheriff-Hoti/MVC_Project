@@ -3,6 +3,7 @@ using System;
 using MVC_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MVCProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230108011312_addCategory")]
+    partial class addCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,39 +24,6 @@ namespace MVCProject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("MVC_Project.Models.Book.Book", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("PublishedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("TypeBookCategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("createdAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("updatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TypeBookCategoryId");
-
-                    b.ToTable("Book");
-                });
 
             modelBuilder.Entity("MVC_Project.Models.Category.Category", b =>
                 {
@@ -187,17 +157,6 @@ namespace MVCProject.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MVC_Project.Models.Book.Book", b =>
-                {
-                    b.HasOne("MVC_Project.Models.Category.Category", "TypeBookCategory")
-                        .WithMany("Books")
-                        .HasForeignKey("TypeBookCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TypeBookCategory");
-                });
-
             modelBuilder.Entity("MVC_Project.Models.Employee.Employee", b =>
                 {
                     b.HasOne("MVC_Project.Models.Shop.Shop", "WorkingLocation")
@@ -205,11 +164,6 @@ namespace MVCProject.Migrations
                         .HasForeignKey("WorkingLocationId");
 
                     b.Navigation("WorkingLocation");
-                });
-
-            modelBuilder.Entity("MVC_Project.Models.Category.Category", b =>
-                {
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("MVC_Project.Models.Shop.Shop", b =>
