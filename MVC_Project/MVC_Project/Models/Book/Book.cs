@@ -13,13 +13,14 @@ namespace MVC_Project.Models.Book
 
         [Required]
         public string Author { get; set; }
+        [Required]
         public DateTime PublishedDate { get; set; }
         public DateTime createdAt { get; set; } = DateTime.Now;
 
         public DateTime updatedAt { get; set; }
 
         [ForeignKey("Category")]
-        public Guid TypeBookCategoryId { get; internal set; }
+        public Guid TypeBookCategoryId { get;  set; }
 
         public virtual Category.Category? TypeBookCategory { get; set; }
 

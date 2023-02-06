@@ -82,7 +82,7 @@ namespace MVC_Project.Models.Book
         public async Task<Book> AddBook(Book book)
         {
             book.createdAt = DateTime.Now.ToUniversalTime();
-            book.TypeBookCategoryId = Guid.NewGuid();
+            book.Id = Guid.NewGuid();
             book.updatedAt = DateTime.Now.ToUniversalTime();
             _db.Book.Add(book);
             await _db.SaveChangesAsync();

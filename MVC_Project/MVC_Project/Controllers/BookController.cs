@@ -41,7 +41,7 @@ namespace MVC_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewBag.categories = await bookServices.GetAllCategories();
+           // ViewBag.categories = await bookServices.GetAllCategories();
             return View();
         }
 
