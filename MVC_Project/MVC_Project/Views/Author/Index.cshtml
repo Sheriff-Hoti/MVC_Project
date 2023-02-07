@@ -1,0 +1,187 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    int currPage = ViewBag.response.Page;
+    int next = currPage + 1;
+    int previous = currPage - 1;
+    int totalPages = ViewBag.response.TotalPages;
+    Dictionary<string, string> renderHeader = new Dictionary<string, string>()
+    {
+        {"FirstName","FirstName"},
+        {"LastName","LastName"},
+        {"Emil","Email"},
+        {"Number","Number"},
+    };
+}
+@model MVC_Project.Wrappers.PageResponse<MVC_Project.Models.Author.Author>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Author List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Author" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-person-add"></i> &nbsp; Create New Author
+            </a>
+        </div>
+    </div>
+    <br />
+    <div style="display:flex">
+        <div style="width:50%">
+            <form asp-action="Index" asp-route-sortColumn=@ViewBag.response.SortColumn method="get" class="input-group mb-3">
+                <input name="filterString" type="text" class="form-control" placeholder="Search Name,Description" value=@ViewBag.response.FilterString>
+                <input type="submit" class="btn btn-primary" value="Search" />
+
+            </form>
+        </div>
+    </div>
+    <br />
+    <div>
+        <form asp-action="Index" method="get" class="input-group mb-3">
+
+            @*<input name="FirstName" type="text" class="form-control" placeholder="Search Name,Description" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="LastName" type="text" class="form-control" placeholder="Search Name,Description" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="Email" type="text" class="form-control" placeholder="Search Name,Description" value=@ViewBag.response.FilterString style="width:14%">
+            <input name="Number" type="text" class="form-control" placeholder="Search Name,Description" value=@ViewBag.response.FilterString style="width:14%">*@
+            <input type="submit" class="btn btn-primary" value="Search" />
+
+        </form>
+    </div>
+    <br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                @foreach (string key in renderHeader.Keys)
+                {
+                    <th>
+                        @if (ViewBag.response.SortColumn == key && ViewBag.response.SortDirection == "ASC")
+                        {
+
+                            <a asp-controller="Author" asp-action="Index"
+                       asp-route-sortColumn=@key
+                       asp-route-sortDirection="DESC"
+                       asp-route-FilterString=@ViewBag.response.FilterString
+                       asp-route-page=@currPage
+                       style="text-decoration:none">
+                                <i class="bi bi-caret-up-square-fill">@renderHeader[key]</i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Author" asp-action="Index"
+                       asp-route-sortColumn=@key
+                       asp-route-sortDirection="ASC"
+                       asp-route-FilterString=@ViewBag.response.FilterString
+                       asp-route-page=@currPage
+                       style="text-decoration:none">
+                                <i class="bi bi-caret-down-square-fill">@renderHeader[key]</i>
+                            </a>
+                        }
+                    </th>
+                }
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Details
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text">
+            @foreach (var Author in await Model.data)
+            {
+                <tr>
+                    <td>
+                        @Author.FirstName
+                    </td>
+                    <td>
+                        @Author.LastName
+                    </td>
+                    <td>
+                        @Author.Email
+                    </td>
+                    <td>
+                        @Author.Number
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Author" asp-action="Edit" asp-route-id="@Author.Id"
+                           class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Author" asp-action="Details" asp-route-id="@Author.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Details
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Author" asp-action="Delete" asp-route-id="@Author.Id"
+                           class="btn btn-danger mx-2">
+                                <i class="bi bi-person-x"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (ViewBag.response.Page == 1)
+    {
+        <a asp-controller="Author" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@previous
+       class="btn btn-danger mx-2 disabled">
+            <i class="bi bi-arrow-left-square-fill"></i> Prev
+        </a>
+    }
+    else
+    {
+        <a asp-controller="Author" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@previous
+       class="btn btn-danger mx-2">
+            <i class="bi bi-arrow-left-square-fill"></i> Prev
+        </a>
+    }
+    <a class="btn btn-danger mx-2">@ViewBag.response.Page</a>
+    @if (totalPages <= currPage)
+    {
+
+        <a asp-controller="Author" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@next
+       class="btn btn-danger mx-2 disabled">
+            <i class="bi bi-arrow-right-square-fill"></i> Next
+        </a>
+    }
+    else
+    {
+
+        <a asp-controller="Author" asp-action="Index"
+       asp-route-sortColumn=@ViewBag.response.SortColumn
+       asp-route-sortDirection=@ViewBag.response.SortDirection
+       asp-route-FilterString=@ViewBag.response.FilterString
+       asp-route-page=@next
+       class="btn btn-danger mx-2">
+            <i class="bi bi-arrow-right-square-fill"></i> Next
+        </a>
+    }
+
+</div>
+
